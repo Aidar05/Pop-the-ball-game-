@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <title>Document</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>  
+    <div class="top">
+      <div class="menu">
+        <div class="menu_element">Режим</div>
+        <div class="menu_element">Уровень</div>
+        <div class="menu_element">История</div>
+        <div class="menu_element">Помощь</div>
+      </div>
+
+      <div class="wrapper">
+        <img class="element" src="settings.png" alt="settings">
+        <div id="profile" class="element"></div>
+      </div>
+    </div>
+
+    <div class="after_game">
+      <div class="you_win">ПОБЕДА!</div>
+      <div class="result">Результат: </div>
+      <button class="play_again">Играть заново</button>
+    </div>
+    
+    <div class="playGround">
+      <div id="sekundomers">
+        <div class="time">
+          <span id="minute">00</span>
+          <span id="second">00</span>
+          <span id="ms">00</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <h1 id="heading">Нажмите играть для начала игры</h1>
+        <div id="target_color"></div>
+      </div>
+
+      <div class="row">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+
+      <div class="row">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+
+      <div class="row">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+
+      <div class="row">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+
+      <div class="buttons">
+        <button id="play">Играть</button>
+        <button id="reload">Начать заново</button>
+      </div>  
+    </div> 
+
+    <script>
+      var timer = 0;
+      var timerInterval;
+      var ms = document.getElementById('ms');
+      var second = document.getElementById('second');
+      var minute = document.getElementById('minute');
+      var balls = document.getElementsByClassName('ball')
+      var restart_button = document.querySelector('#reload')
+      var play_button = document.querySelector('#play')
+      var target_color = document.querySelector('#target_color')
+      var win_message = document.querySelector('.you_win')
+      var result = document.querySelector('.result')
+      var play_again = document.querySelector('.play_again')
+      var after_game = document.querySelector('.after_game')
+      var colors = [
+        'orange', 'blue', 'yellow', 'aquamarine',
+        'purple', 'green', 'hotpink', 'orange', 
+      ]
+
+      try{
+        let tr = Math.floor(Math.random() * (2 - 0) + 0)
+        if (tr==0){
+          for (i in balls){
+            let index = Math.floor(Math.random() * (colors.length/2 - 0) + 0)
+            balls[i].style.backgroundColor = colors[index]
+          }
+        } if (tr==1){
+          for (i in balls){
+            let index = Math.floor(Math.random() * (colors.length - 4) + 4)
+            balls[i].style.backgroundColor = colors[index]
+          }
+        }  
+      }catch{TypeError}
+
+      function play(){
+        document.querySelector('#heading').innerHTML = 'Порази все цели с указанным цветом:'
+        target_color.style.display = 'flex'
+        target_color.style.backgroundColor = balls[10].style.backgroundColor
+
+        timerInterval = setInterval(function () {
+          timer += 1 / 60;
+          msVal = Math.floor((timer - Math.floor(timer)) * 100);
+          secondVal = Math.floor(timer) - Math.floor(timer / 60) * 60;
+          minuteVal = Math.floor(timer / 60);
+          ms.innerHTML = msVal < 10 ? "0" + msVal.toString() : msVal;
+          second.innerHTML = secondVal < 10 ? "0" + secondVal.toString() : secondVal;
+          minute.innerHTML = minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal;
+        }, 1000 / 60);
+
+        try{
+          for (i in balls){
+            balls[i].addEventListener('click', cl)
+          }
+        }catch{TypeError}
+
+        check = setInterval(function(){
+          var count = 0
+          
+          try{
+            for (i in balls){
+              if (balls[i].style.backgroundColor==target_color.style.backgroundColor){
+                if (balls[i].style.display != 'none'){
+                  count += 1
+                }
+              }
+            }
+          }
+          catch{TypeError}
+          finally{
+            if (count==0){
+              win()
+            }
+          }  
+          }, 200)
+      }
+
+      function cl(el){
+        if (el.target.style.backgroundColor==target_color.style.backgroundColor){
+          el.target.style.display = 'none'
+        } else{
+            lost()
+        }
+      } 
+
+      function win(){
+        clearInterval(timerInterval)
+        result.innerHTML += minute.innerHTML + ':' + second.innerHTML + ':' + ms.innerHTML
+        result.style.display = 'block'
+        play_again.style.display = 'block'
+        after_game.style.height = '100vh'
+        document.querySelector('.playGround').style.display = 'none'
+        win_message.style.display = 'flex'
+        clearInterval(check)
+      }
+
+      function lost(){
+        clearInterval(timerInterval)
+        document.querySelector('.playGround').style.display = 'none'
+        play_again.style.display = 'block'
+        after_game.style.height = '100vh'
+        win_message.style.display = 'flex'
+        win_message.innerHTML = 'ПОРАЖЕНИЕ!'
+      }
+
+      function restart_game(){
+        window.location.reload(true)
+      }
+
+      restart_button.addEventListener('click', restart_game)
+      play_button.addEventListener('click', play)
+      play_again.addEventListener('click', restart_game)
+
+    </script>
+  </body>
+</html>
