@@ -1,8 +1,12 @@
+
+
 body{
   height: 100vh;
   background-color: black;
 }
 
+
+/* Вся верхнаяя часть html элементов здесь */
 .top{
   height: 60px;
   margin-bottom: 100px;
@@ -22,6 +26,7 @@ body{
   padding-right: 20px;
   font-size: 20px;
 }
+
 .menu_element:hover{
   color: red;
 }
@@ -32,6 +37,7 @@ body{
 }
 
 .element{
+
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -43,6 +49,9 @@ body{
   opacity: 0.6;
 }
 
+
+
+/* Это стили html элементов которые появляються после игры   */
 .after_game{
   display: flex;
   flex-direction: column;
@@ -75,6 +84,9 @@ body{
   color: crimson;
 }
 
+
+
+/* Это все что находиться в игровом поле */
 .playGround{
   display: flex;
   flex-direction: column;
