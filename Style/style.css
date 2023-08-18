@@ -8,14 +8,17 @@ body{
 
 /* Вся верхнаяя часть html элементов здесь */
 .top{
+  display: flex;
+  justify-content:space-around;
   height: 60px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+  padding: 10px;
 }
 
 .menu{
-  display: block;
-  padding: 20px;
-  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu_element{
@@ -28,16 +31,17 @@ body{
 }
 
 .menu_element:hover{
-  color: red;
+  color: rgb(238, 121, 121);
 }
 
 .wrapper{
-  float: right;
-  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .element{
-
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -56,6 +60,7 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 70px;
 }
 
 .you_win{
@@ -78,10 +83,11 @@ body{
   font-size: 20px;
   background-color: black;
   color: white;
+  border-width: 0px;
 }
 
 .play_again:hover{
-  color: crimson;
+  color: rgb(245, 102, 131);
 }
 
 
@@ -134,12 +140,14 @@ h1{
   height: 50px;
   font-size: 20px;
   background-color: black;
+  border-color: black;
   color: white;
   margin: 20px 0 0 0;
+  border-width: 0px;
 }
 
 .buttons > *:hover{
-  color: crimson;
+  color: rgb(247, 112, 139);
 }
 
 .time > *{
